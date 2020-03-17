@@ -100,6 +100,7 @@ dojo.declare("classes.ui.DesktopUI", classes.ui.UISystem, {
     animationStarted: false,
     kittenASCIIBtn: null,
     animationStoppedRemaintingTime: 0,
+    kittenASCIIHappiness: 0,
 
     constructor: function(containerId){
         this.containerId = containerId;
@@ -969,11 +970,13 @@ dojo.declare("classes.ui.DesktopUI", classes.ui.UISystem, {
             this.game.ui.frame += 1;
             /* Pause the animation at frame 5 with a message on the button */
             if (this.game.ui.frame == 5){
-                this.kittenASCIIcontrolerPause("Take it down"); // TODO Use $I("") for translation.
+                this.kittenASCIIcontrolerPause("Bring it down"); // TODO Use $I("") for translation.
+                this.kittenASCIIHappiness = -1;
             }
             /* Finish the animation (last frame + 1) */
             if (this.game.ui.frame == 14){
                 this.kittenASCIIcontrolerFinish();
+                this.kittenASCIIHappiness = 0;
             }
         }
 
@@ -1049,7 +1052,10 @@ dojo.declare("classes.ui.DesktopUI", classes.ui.UISystem, {
     updateKittenASCII: function(){
         if (!this.game.ui.animationStarted){
             if (this.animationStoppedRemaintingTime == 0){
-                var rand = this.game.math.uniformRandomInteger(0,5*2*10); // probably 5 * 2 * number of days // Low value for test TODO
+                /* Default this.kittenASCIIHappiness */
+                this.kittenASCIIHappiness = 0;
+
+                var rand = this.game.math.uniformRandomInteger(0,5*2*1); // probably 5 * 2 * number of days // Low value for test TODO
                 if (rand < 1) {
                     this.game.ui.animationStarted = true;
                     this.game.ui.animated = true;
