@@ -95,6 +95,12 @@ dojo.declare("classes.ui.DesktopUI", classes.ui.UISystem, {
     isChatActive: false,
     isChatVisited: false,
 
+    frame: -1,
+    animated: false,
+    animationStarted: false,
+    kittenASCIIBtn: null,
+    animationStoppedRemaintingTime: 0,
+
     constructor: function(containerId){
         this.containerId = containerId;
 
@@ -471,6 +477,7 @@ dojo.declare("classes.ui.DesktopUI", classes.ui.UISystem, {
         this.updateFastHunt();
         this.updateFastPraise();
         this.updateCalendar();
+        this.updateKittenASCII();
         this.updateUndoButton();
         this.updateAdvisors();
 
@@ -908,6 +915,168 @@ dojo.declare("classes.ui.DesktopUI", classes.ui.UISystem, {
     isEffectMultiplierEnabled: function(){
         //console.log(this.keyStates);
         return this.keyStates.shiftKey;
+    },
+    //--------------------------------------------
+
+    kittenASCIIcontroler0: function() {
+        /* Template of no animation, for the first level */
+        return "<br />,'|''|',,,,'|',, :3 '|','|',,,'|','|'";
+    },
+
+    getkittenASCIIFrames15: function(frame) {
+        /* All frames of kitten ASCII 0 */
+        switch (frame) {
+        case 11:
+            return "<br />,'|''|',,,,'|', :3 ,'|','|',,,'|','|'";
+        case 10:
+            return "<br />,'|''|',,,,'|' :3 ,,'|','|',,,'|','|'";
+        case 9:
+            return "<br />,'|''|',,,,'| :3 ,,,'|','|',,,'|','|'";
+        case 8:
+            return "<br />,'|''|',,,,' :3 ,,,,'|','|',,,'|','|'";
+        case 7:
+            return "<br />,'|''|',,,, :3 ,,,,,'|','|',,,'|','|'";
+        case 6:
+            return "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:3<br />,'|''|',,,'|',,,,,,,'|','|',,,'|','|'";
+        case 5:
+            return "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:3<br />,'|''|',,,'|',,,,,,,'|','|',,,'|','|'";
+        case 4:
+            return "<br />,'|''|',,,, :3 ,,,,,'|','|',,,'|','|'";
+        case 3:
+            return "<br />,'|''|',,,,' :3 ,,,,'|','|',,,'|','|'";
+        case 2:
+            return "<br />,'|''|',,,,'| :3 ,,,'|','|',,,'|','|'";
+        case 1:
+            return "<br />,'|''|',,,,'|' :3 ,,'|','|',,,'|','|'";
+        case 0:
+            return "<br />,'|''|',,,,'|', :3 ,'|','|',,,'|','|'";
+        default:
+            return "<br />,'|''|',,,,'|',, :3 '|','|',,,'|','|'";
+        }
+    },
+
+    kittenASCIIcontroler15: function() {
+        /* This function control animation of kitten ASCII 0 according to its random start and click on the button by user */
+        if (this.game.ui.animated){
+            /* Template to stop the animation at frame 5
+               See below for the rest of the template */
+            if (this.game.ui.frame < 5){
+                this.game.ui.frame += 1;
+                if (this.game.ui.frame == 4){
+                    this.game.ui.animated = false;
+                    this.game.ui.frame = 5;
+                    /* Create a button to go forward the animation */
+                    this.createKittenASCIIButton();
+                }
+            }
+            /* Template to finish the animation */
+            else if (this.game.ui.frame < 12){
+                this.game.ui.frame += 1;
+                if(this.game.ui.frame == 11){
+                    this.clearkittenASCIIanimation();
+                }
+            }
+        }
+        else{
+            /* Rest of the template to stop the animation at frame 5 */
+            if (this.game.ui.frame != 5){
+                  this.game.ui.frame = -1;
+            }
+        }
+
+        return this.getkittenASCIIFrames15(this.game.ui.frame);
+    },
+
+    getKittenASCII: function(){
+        var kittens = this.game.village.getKittens();
+        switch (true) {
+        case kittens > 10000:
+            return "Nothing for the moment TODO";
+        case kittens > 5000:
+            return "Nothing for the moment TODO";
+        case kittens > 2000:
+            return "Nothing for the moment TODO";
+        case kittens > 1500:
+            return "Nothing for the moment TODO";
+        case kittens > 1200:
+            return "Nothing for the moment TODO";
+        case kittens > 1000:
+            return "Nothing for the moment TODO";
+        case kittens > 900:
+            return "Nothing for the moment TODO";
+        case kittens > 800:
+            return "Nothing for the moment TODO";
+        case kittens > 700:
+            return "Nothing for the moment TODO";
+        case kittens > 600:
+            return "Nothing for the moment TODO";
+        case kittens > 500:
+            return "Nothing for the moment TODO";
+        case kittens > 400:
+            return "Nothing for the moment TODO";
+        case kittens > 300:
+            return "Nothing for the moment TODO";
+        case kittens > 250:
+            return "Nothing for the moment TODO";
+        case kittens > 200:
+            return "Nothing for the moment TODO";
+        case kittens > 150:
+            return "Nothing for the moment TODO";
+        case kittens > 100:
+            return "Nothing for the moment TODO";
+        case kittens > 50:
+            return "Nothing for the moment TODO";
+        case kittens > 30:
+            return "Nothing for the moment TODO"
+        case kittens > 15:
+            return this.kittenASCIIcontroler15();;
+        default:
+            return this.kittenASCIIcontroler15();; // 15 replaced 0 for the test. Must be changed after test TODO
+        }
+	},
+
+    clearkittenASCIIanimation: function() {
+        this.game.ui.animated = false;
+        this.game.ui.animationStarted = false;
+        this.game.ui.frame = -1;
+
+        this.animationStoppedRemaintingTime = 5*2*30 ; // 5 * 2 * number of days
+    },
+
+    updateKittenASCII: function(){
+        var kittenASCII = this.getKittenASCII();
+        $("#kittenASCII").html(kittenASCII);
+
+        if (!this.game.ui.animationStarted){
+            if (this.animationStoppedRemaintingTime == 0){
+                var rand = this.game.math.uniformRandomInteger(0,5*2*10); // probably 5 * 2 * number of days // Low value for test TODO
+                if (rand < 1) {
+                    this.game.ui.animationStarted = true;
+                    this.game.ui.animated = true;
+                }
+            }
+            else {
+                this.animationStoppedRemaintingTime -= 1;
+            }
+        }
+    },
+
+    kittenASCIIHandler: function() {
+		dojo.destroy(this.kittenASCIIBtn);
+		this.kittenASCIIBtn = null;
+        this.game.ui.animated = true;
+    },
+
+    createKittenASCIIButton: function() {
+        var node = dojo.byId("kittenASCIIButton");
+
+	    this.kittenASCIIBtn = dojo.create("input", {
+		    id: "kittenASCIIBtn",
+		    type: "button",
+		    value: "Take down the kitten"// TODO Use $I("") for translation.
+	    }, node);
+
+	    dojo.connect(this.kittenASCIIBtn, "onclick", this, this.kittenASCIIHandler);
     }
 
 });

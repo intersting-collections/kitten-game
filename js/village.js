@@ -639,6 +639,10 @@ dojo.declare("classes.managers.VillageManager", com.nuclearunicorn.core.TabManag
 			happiness = 25;
 		}
 
+        if (this.game.ui.animationStoppedRemaintingTime > 0) {
+            happiness += 1;
+        }
+
 		this.happiness = happiness/100;
 	},
 
