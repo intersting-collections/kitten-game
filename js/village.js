@@ -639,7 +639,7 @@ dojo.declare("classes.managers.VillageManager", com.nuclearunicorn.core.TabManag
 			happiness = 25;
 		}
 
-        happiness += this.game.ui.kittenASCIIHappiness;
+        happiness += this.game.ui.asciiHappiness;
 
 		this.happiness = happiness/100;
 	},
