@@ -479,7 +479,7 @@ dojo.declare("classes.ui.DesktopUI", classes.ui.UISystem, {
         this.updateFastHunt();
         this.updateFastPraise();
         this.updateCalendar();
-        this.updateKittenASCII();
+        this.updateAscii();
         this.updateUndoButton();
         this.updateAdvisors();
 
@@ -918,7 +918,83 @@ dojo.declare("classes.ui.DesktopUI", classes.ui.UISystem, {
         //console.log(this.keyStates);
         return this.keyStates.shiftKey;
     },
+
     //--------------------------------------------
+
+    updateAscii: function(){
+        if (!this.asciiWoken){
+            if (this.asciiAsleepRemaintingTime == 0){
+                /* Default Bonus/Malus */
+                this.asciiHappiness = 0;
+
+                var rand = this.game.math.uniformRandomInteger(0,5*2*1); // probably 5 * 2 * number of days // Low value for testing TODO
+                if (rand < 1) {
+                    /* Start ascii game */
+                    this.asciiWoken = true;
+                    this.asciiLoop = false;
+                }
+            }
+            else {
+                this.asciiAsleepRemaintingTime -= 1;
+            }
+        }
+
+        var ascii = this.getAscii();
+        $("#ascii").html(ascii);
+    },
+
+    getAscii: function(){
+        var kittens = this.game.village.getKittens();
+        switch (true) {
+        case kittens > 10000:
+            return this.asciiControlerDefault();;
+        case kittens > 5000:
+            return this.asciiControlerDefault();;
+        case kittens > 2000:
+            return this.asciiControlerDefault();;
+        case kittens > 1500:
+            return this.asciiControlerDefault();;
+        case kittens > 1200:
+            return this.asciiControlerDefault();;
+        case kittens > 1000:
+            return this.asciiControlerDefault();;
+        case kittens > 900:
+            return this.asciiControlerDefault();;
+        case kittens > 800:
+            return this.asciiControlerDefault();;
+        case kittens > 700:
+            return this.asciiControlerDefault();;
+        case kittens > 600:
+            return this.asciiControlerDefault();;
+        case kittens > 500:
+            return this.asciiControlerDefault();;
+        case kittens > 400:
+            return this.asciiControlerDefault();;
+        case kittens > 300:
+            return this.asciiControlerDefault();;
+        case kittens > 250:
+            return this.asciiControlerDefault();;
+        case kittens > 200:
+            return this.asciiControlerDefault();;
+        case kittens > 150:
+            return this.asciiControlerDefault();;
+        case kittens > 100:
+            return this.asciiControlerDefault();;
+        case kittens > 50:
+            return this.asciiControlerDefault();;
+        case kittens > 30:
+            return this.asciiControler30();;
+        case kittens > 15:
+            return this.asciiControler15();;
+        default:
+            return this.asciiControler30();; // Change it for testing without save. Must be changed in final release by this.asciiControler0();; TODO
+        }
+	},
+
+    /*
+        getAsciiFrameTEMPLATE and asciiControlerTEMPLATE must be copied to create another set of animation
+        Replace TEMPLATE by a number, preferably the number for case in getAscii()
+    */
 
     getAsciiFrameTEMPLATE: function(frame) {
         switch (frame) {
@@ -932,26 +1008,29 @@ dojo.declare("classes.ui.DesktopUI", classes.ui.UISystem, {
     asciiControlerTEMPLATE: function() {
         /* This function controls animation of kitten ASCII TEMPLATE */
         this.frame += 1;
+
         /* Loop by default the animation between frame default and default without button */
         if (this.frame == 1 && this.asciiLoop){
             this.frame = -1;
         }
+
         /* Loop the animation between frame 5 and 10 with button */
-        if (this.frame == 5 && !this.asciiLoop){
+        else if (this.frame == 5 && !this.asciiLoop){
             this.asciiControlerLoopButton("MESSAGE"); // TODO Use $I("") for translation.
             /* Effect */
             //this.asciiHappiness = ;
         }
-        if (this.frame == 10 && this.asciiLoop){
+        else if (this.frame == 10 && this.asciiLoop){
             this.frame = 5;
         }
+
         /* Loop the animation between frame 5 and 10 for a moment */
-        if (this.frame == 5 && !this.asciiLoop){
+        else if (this.frame == 5 && !this.asciiLoop){
             this.asciiControlerLoopTime();
             /* Effect */
             //this.asciiHappiness = ;
         }
-        if (this.frame == 11 && this.asciiLoop){
+        else if (this.frame == 11 && this.asciiLoop){
             this.asciiLoopRemaintingTime += 1;
             if (this.asciiLoopRemaintingTime < 5*2*2 ){ // Time in days stay in the loop
                 this.frame = 5;
@@ -964,8 +1043,9 @@ dojo.declare("classes.ui.DesktopUI", classes.ui.UISystem, {
                 //this.asciiHappiness = ;
             }
         }
+
         /* Finish the animation (last frame + 1) */
-        if (this.frame == 15){
+        else if (this.frame == 15){
             this.asciiControlerFinish();
             /* Effect during Remainting Time */
             //this.asciiHappiness = ;
@@ -974,9 +1054,79 @@ dojo.declare("classes.ui.DesktopUI", classes.ui.UISystem, {
         return this.getAsciiFrameTEMPLATE(this.frame);
     },
 
-    asciiControler0: function() {
-        /* This function controls ascii without animation, for the first level */
+   asciiControlerLoopButton: function(buttonMessage){
+        this.asciiLoop = true;
+        /* Create a button to go forward the animation */
+        this.createAsciiButton(buttonMessage);
+    },
+
+    asciiControlerLoopTime: function(buttonMessage){
+        this.asciiLoop = true;
+    },
+
+    asciiControlerFinish: function(){
+        this.asciiAsleepRemaintingTime = 5*2*10 ; // 5 * 2 * number of days. Must be changed after test TODO
+        this.clearAsciiWoken();
+    },
+
+    clearAsciiWoken: function() {
+        this.asciiLoop = true;
+        this.asciiWoken = false;
+        this.frame = -1;
+        this.asciiLoopRemaintingTime = 0;
+    },
+
+    asciiHandler: function() {
+		dojo.destroy(this.asciiBtn);
+		this.asciiButton = null;
+        this.asciiLoop = false;
+    },
+
+    createAsciiButton: function(buttonMessage) {
+        var node = dojo.byId("asciiButton");
+
+	    this.asciiBtn = dojo.create("input", {
+		    id: "asciiBtn",
+		    type: "button",
+		    value: buttonMessage
+	    }, node);
+
+	    dojo.connect(this.asciiBtn, "onclick", this, this.asciiHandler);
+    },
+
+    asciiControlerDefault: function() {
+        /* This function controls ascii without animation */
         return "<br />,'|''|',,,,'|',, :3 '|','|',,,'|','|'";
+    },
+
+    asciiControler0: function() {
+        return "<br />,'|''|',,,,'|',, :3 '|','|',,,'|','|'";
+    },
+
+    asciiControler15: function() {
+        /* This function controls animation of kitten ASCII 15 */
+        this.frame += 1;
+        /* Loop by default the animation between frame default and default (static in this case) without button */
+        if (this.frame == 0 && this.asciiLoop){
+            this.frame = -1;
+        }
+        /* Loop the animation between frame 5 and 5 (static in this case) with button */
+        else if (this.frame == 5 && !this.asciiLoop){
+            this.asciiControlerLoopButton("Bring it down"); // TODO Use $I("") for translation.
+            /* Effect */
+            this.asciiHappiness = -1;
+        }
+        else if (this.frame == 6 && this.asciiLoop){
+            this.frame = 5;
+        }
+        /* Finish the animation (last frame + 1) */
+        else if (this.frame == 13){
+            this.asciiControlerFinish();
+            /* Effect during Remainting Time */
+            this.asciiHappiness = 0;
+        }
+
+        return this.getAsciiFrame15(this.frame);
     },
 
     getAsciiFrame15: function(frame) {
@@ -1012,30 +1162,48 @@ dojo.declare("classes.ui.DesktopUI", classes.ui.UISystem, {
         }
     },
 
-    asciiControler15: function() {
-        /* This function controls animation of kitten ASCII 15 */
+    asciiControler30: function() {
+        /* This function controls animation of kitten ASCII TEMPLATE */
         this.frame += 1;
-        /* Loop by default the animation between frame default and default (static in this case) without button */
+        /* Loop by default the animation between frame default and default without button */
         if (this.frame == 0 && this.asciiLoop){
             this.frame = -1;
         }
-        /* Loop the animation between frame 5 and 5 (static in this case) with button */
-        if (this.frame == 5 && !this.asciiLoop){
-            this.asciiControlerLoopButton("Bring it down"); // TODO Use $I("") for translation.
-            /* Effect */
-            this.asciiHappiness = -1;
+
+        /* Loop the animation between frame 0 and 0 with button */
+        else if (this.frame == 0 && !this.asciiLoop){
+            this.asciiControlerLoopButton("Look the sky"); // TODO Use $I("") for translation.
         }
-        if (this.frame == 6 && this.asciiLoop){
-            this.frame = 5;
-        }
-        /* Finish the animation (last frame + 1) */
-        if (this.frame == 15){
-            this.asciiControlerFinish();
-            /* Effect during Remainting Time */
-            this.asciiHappiness = 0;
+        else if (this.frame == 1 && this.asciiLoop){
+            this.frame = 0;
         }
 
-        return this.getAsciiFrame15(this.frame);
+        /* Loop the animation between frame 6 and 6 for a moment */
+        else if (this.frame == 6 && !this.asciiLoop){
+            this.asciiControlerLoopTime();
+            /* Effect */
+            this.asciiHappiness = 1;
+        }
+        else if (this.frame == 7 && this.asciiLoop){
+            this.asciiLoopRemaintingTime += 1;
+            if (this.asciiLoopRemaintingTime < 5*2*10 ){ // Time in days staying in the loop
+                this.frame = 6;
+            }
+            else {
+                this.frame = 7
+                this.asciiLoop = false;
+                this.asciiLoopRemaintingTime = 0;
+            }
+        }
+
+        /* Finish the animation (last frame + 1) */
+        else if (this.frame == 13){
+            this.asciiControlerFinish();
+            /* Effect during Remainting Time */
+            this.asciiHappiness = 1;
+        }
+
+        return this.getAsciiFrame30(this.frame);
     },
 
     getAsciiFrame30: function(frame) {
@@ -1069,160 +1237,6 @@ dojo.declare("classes.ui.DesktopUI", classes.ui.UISystem, {
         default:
             return "<br />&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp/|\\<br />,'|''|',,,'|',,, :3 '|','|',,,'|','|'";
         }
-    },
-
-    asciiControler30: function() {
-        /* This function controls animation of kitten ASCII TEMPLATE */
-        this.frame += 1;
-        /* Loop by default the animation between frame default and default without button */
-        if (this.frame == 0 && this.asciiLoop){
-            this.frame = -1;
-        }
-
-        /* Loop the animation between frame 0 and 0 with button */
-        if (this.frame == 0 && !this.asciiLoop){
-            this.asciiControlerLoopButton("Look the sky"); // TODO Use $I("") for translation.
-        }
-        if (this.frame == 1 && this.asciiLoop){
-            this.frame = 0;
-        }
-
-        /* Loop the animation between frame 6 and 6 for a moment */
-        if (this.frame == 6 && !this.asciiLoop){
-            this.asciiControlerLoopTime();
-            /* Effect */
-            this.asciiHappiness = 1;
-        }
-        if (this.frame == 7 && this.asciiLoop){
-            this.asciiLoopRemaintingTime += 1;
-            if (this.asciiLoopRemaintingTime < 5*2*10 ){ // Time in days staying in the loop
-                this.frame = 6;
-            }
-            else {
-                this.frame = 7
-                this.asciiLoop = false;
-                this.asciiLoopRemaintingTime = 0;
-            }
-        }
-
-        /* Finish the animation (last frame + 1) */
-        if (this.frame == 13){
-            this.asciiControlerFinish();
-            /* Effect during Remainting Time */
-            this.asciiHappiness = 1;
-        }
-
-        return this.getAsciiFrame30(this.frame);
-    },
-
-    asciiControlerLoopButton: function(buttonMessage){
-        this.asciiLoop = true;
-        /* Create a button to go forward the animation */
-        this.createAsciiButton(buttonMessage);
-    },
-
-    asciiControlerLoopTime: function(buttonMessage){
-        this.asciiLoop = true;
-    },
-
-    asciiControlerFinish: function(){
-        this.asciiAsleepRemaintingTime = 5*2*30 ; // 5 * 2 * number of days. Must be changed after test TODO
-        this.clearAsciiWoken();
-    },
-
-    clearAsciiWoken: function() {
-        this.asciiLoop = true;
-        this.asciiWoken = false;
-        this.frame = -1;
-        this.asciiLoopRemaintingTime = 0;
-    },
-
-    asciiHandler: function() {
-		dojo.destroy(this.asciiBtn);
-		this.asciiButton = null;
-        this.asciiLoop = false;
-    },
-
-    createAsciiButton: function(buttonMessage) {
-        var node = dojo.byId("asciiButton");
-
-	    this.asciiBtn = dojo.create("input", {
-		    id: "asciiBtn",
-		    type: "button",
-		    value: buttonMessage
-	    }, node);
-
-	    dojo.connect(this.asciiBtn, "onclick", this, this.asciiHandler);
-    },
-
-    getAscii: function(){
-        var kittens = this.game.village.getKittens();
-        switch (true) {
-        case kittens > 10000:
-            return "Nothing for the moment TODO";
-        case kittens > 5000:
-            return "Nothing for the moment TODO";
-        case kittens > 2000:
-            return "Nothing for the moment TODO";
-        case kittens > 1500:
-            return "Nothing for the moment TODO";
-        case kittens > 1200:
-            return "Nothing for the moment TODO";
-        case kittens > 1000:
-            return "Nothing for the moment TODO";
-        case kittens > 900:
-            return "Nothing for the moment TODO";
-        case kittens > 800:
-            return "Nothing for the moment TODO";
-        case kittens > 700:
-            return "Nothing for the moment TODO";
-        case kittens > 600:
-            return "Nothing for the moment TODO";
-        case kittens > 500:
-            return "Nothing for the moment TODO";
-        case kittens > 400:
-            return "Nothing for the moment TODO";
-        case kittens > 300:
-            return "Nothing for the moment TODO";
-        case kittens > 250:
-            return "Nothing for the moment TODO";
-        case kittens > 200:
-            return "Nothing for the moment TODO";
-        case kittens > 150:
-            return "Nothing for the moment TODO";
-        case kittens > 100:
-            return "Nothing for the moment TODO";
-        case kittens > 50:
-            return "Nothing for the moment TODO";
-        case kittens > 30:
-            return this.asciiControler30();;
-        case kittens > 15:
-            return this.asciiControler15();;
-        default:
-            return this.asciiControler30();; // this.asciiControler0();; replaced for the test. Must be changed after test TODO
-        }
-	},
-
-    updateKittenASCII: function(){
-        if (!this.asciiWoken){
-            if (this.asciiAsleepRemaintingTime == 0){
-                /* Default Bonus/Malus */
-                this.asciiHappiness = 0;
-
-                var rand = this.game.math.uniformRandomInteger(0,5*2*1); // probably 5 * 2 * number of days // Low value for test TODO
-                if (rand < 1) {
-                    /* Start ascii game */
-                    this.asciiWoken = true;
-                    this.asciiLoop = false;
-                }
-            }
-            else {
-                this.asciiAsleepRemaintingTime -= 1;
-            }
-        }
-
-        var ascii = this.getAscii();
-        $("#ascii").html(ascii);
     }
 
 });
