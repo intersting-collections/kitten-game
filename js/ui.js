@@ -947,53 +947,55 @@ dojo.declare("classes.ui.DesktopUI", classes.ui.UISystem, {
         var kittens = this.game.village.getKittens();
         switch (true) {
         case kittens > 10000:
-            return this.asciiControlerDefault();;
+            return this.asciiControler10000();;
         case kittens > 5000:
-            return this.asciiControlerDefault();;
+            return this.asciiControler5000();;
         case kittens > 2000:
-            return this.asciiControlerDefault();;
+            return this.asciiControler2000();;
         case kittens > 1500:
-            return this.asciiControlerDefault();;
+            return this.asciiControler1500();;
         case kittens > 1200:
-            return this.asciiControlerDefault();;
+            return this.asciiControler1200();;
         case kittens > 1000:
-            return this.asciiControlerDefault();;
+            return this.asciiControler1000();;
         case kittens > 900:
-            return this.asciiControlerDefault();;
+            return this.asciiControler900();;
         case kittens > 800:
-            return this.asciiControlerDefault();;
+            return this.asciiControler800();;
         case kittens > 700:
-            return this.asciiControlerDefault();;
+            return this.asciiControler700();;
         case kittens > 600:
-            return this.asciiControlerDefault();;
+            return this.asciiControler600();;
         case kittens > 500:
-            return this.asciiControlerDefault();;
+            return this.asciiControler500();;
         case kittens > 400:
-            return this.asciiControlerDefault();;
+            return this.asciiControler400();;
         case kittens > 300:
-            return this.asciiControlerDefault();;
+            return this.asciiControler300();;
         case kittens > 250:
-            return this.asciiControlerDefault();;
+            return this.asciiControler250();;
         case kittens > 200:
-            return this.asciiControlerDefault();;
+            return this.asciiControler200();;
         case kittens > 150:
-            return this.asciiControlerDefault();;
+            return this.asciiControler150();;
         case kittens > 100:
-            return this.asciiControlerDefault();;
+            return this.asciiControler100();;
         case kittens > 50:
-            return this.asciiControlerDefault();;
+            return this.asciiControler50();;
         case kittens > 30:
             return this.asciiControler30();;
         case kittens > 15:
             return this.asciiControler15();;
         default:
-            return this.asciiControler30();; // Change it for testing without save. Must be changed in final release by this.asciiControler0();; TODO
+            return this.asciiControler5000();; // Change it for testing without save. Must be changed in final release by this.asciiControler0();; TODO
         }
 	},
 
     /*
-        getAsciiFrameTEMPLATE and asciiControlerTEMPLATE must be copied to create another set of animation
-        Replace TEMPLATE by a number, preferably the number for case in getAscii()
+        Those are templates to help people to make animations.
+        You can - add cases of ascii which are frames of your animation
+                - insert parts in your controler to create the general behavior
+                - modify numbers and messages to adjust your animation
     */
 
     getAsciiFrameTEMPLATE: function(frame) {
@@ -1010,10 +1012,11 @@ dojo.declare("classes.ui.DesktopUI", classes.ui.UISystem, {
         this.frame += 1;
 
         /* Loop by default the animation between frame default and default without button */
-        if (this.frame == 1 && this.asciiLoop){
+        if (this.frame == 0 && this.asciiLoop){
             this.frame = -1;
         }
 
+        //---- INSERT THIS PART
         /* Loop the animation between frame 5 and 10 with button */
         else if (this.frame == 5 && !this.asciiLoop){
             this.asciiControlerLoopButton("MESSAGE"); // TODO Use $I("") for translation.
@@ -1023,7 +1026,9 @@ dojo.declare("classes.ui.DesktopUI", classes.ui.UISystem, {
         else if (this.frame == 10 && this.asciiLoop){
             this.frame = 5;
         }
+        //----
 
+        //---- INSERT THIS PART
         /* Loop the animation between frame 5 and 10 for a moment */
         else if (this.frame == 5 && !this.asciiLoop){
             this.asciiControlerLoopTime();
@@ -1043,6 +1048,7 @@ dojo.declare("classes.ui.DesktopUI", classes.ui.UISystem, {
                 //this.asciiHappiness = ;
             }
         }
+        //----
 
         /* Finish the animation (last frame + 1) */
         else if (this.frame == 15){
@@ -1237,6 +1243,546 @@ dojo.declare("classes.ui.DesktopUI", classes.ui.UISystem, {
         default:
             return "<br />&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp/|\\<br />,'|''|',,,'|',,, :3 '|','|',,,'|','|'";
         }
+    },
+
+    getAsciiFrame50: function(frame) {
+        switch (frame) {
+        case 0:
+            return "<br />,'|''|',,,,'|',, :3 '|','|',,,'|','|'";
+        default:
+            return "<br />,'|''|',,,,'|',, :3 '|','|',,,'|','|'";
+        }
+    },
+
+    asciiControler50: function() {
+    /* This function controls animation of kitten ASCII 50 */
+        this.frame += 1;
+
+        /* Loop by default the animation between frame default and default without button */
+        if (this.frame == 0 && this.asciiLoop){
+            this.frame = -1;
+        }
+
+
+
+        /* Finish the animation (last frame + 1) */
+        else if (this.frame == 1){
+            this.asciiControlerFinish();
+            /* Effect during Remainting Time */
+            //this.asciiHappiness = ;
+        }
+
+        return this.getAsciiFrame50(this.frame);
+    },
+
+    getAsciiFrame100: function(frame) {
+        switch (frame) {
+        case 0:
+            return "<br />,'|''|',,,,'|',, :3 '|','|',,,'|','|'";
+        default:
+            return "<br />,'|''|',,,,'|',, :3 '|','|',,,'|','|'";
+        }
+    },
+
+    asciiControler100: function() {
+    /* This function controls animation of kitten ASCII 100 */
+        this.frame += 1;
+
+        /* Loop by default the animation between frame default and default without button */
+        if (this.frame == 0 && this.asciiLoop){
+            this.frame = -1;
+        }
+
+
+
+        /* Finish the animation (last frame + 1) */
+        else if (this.frame == 1){
+            this.asciiControlerFinish();
+            /* Effect during Remainting Time */
+            //this.asciiHappiness = ;
+        }
+
+        return this.getAsciiFrame100(this.frame);
+    },
+
+    getAsciiFrame150: function(frame) {
+        switch (frame) {
+        case 0:
+            return "<br />,'|''|',,,,'|',, :3 '|','|',,,'|','|'";
+        default:
+            return "<br />,'|''|',,,,'|',, :3 '|','|',,,'|','|'";
+        }
+    },
+
+    asciiControler150: function() {
+    /* This function controls animation of kitten ASCII 150 */
+        this.frame += 1;
+
+        /* Loop by default the animation between frame default and default without button */
+        if (this.frame == 0 && this.asciiLoop){
+            this.frame = -1;
+        }
+
+
+
+        /* Finish the animation (last frame + 1) */
+        else if (this.frame == 1){
+            this.asciiControlerFinish();
+            /* Effect during Remainting Time */
+            //this.asciiHappiness = ;
+        }
+
+        return this.getAsciiFrame150(this.frame);
+    },
+
+    getAsciiFrame200: function(frame) {
+        switch (frame) {
+        case 0:
+            return "<br />,'|''|',,,,'|',, :3 '|','|',,,'|','|'";
+        default:
+            return "<br />,'|''|',,,,'|',, :3 '|','|',,,'|','|'";
+        }
+    },
+
+    asciiControler200: function() {
+    /* This function controls animation of kitten ASCII 200 */
+        this.frame += 1;
+
+        /* Loop by default the animation between frame default and default without button */
+        if (this.frame == 0 && this.asciiLoop){
+            this.frame = -1;
+        }
+
+
+
+        /* Finish the animation (last frame + 1) */
+        else if (this.frame == 1){
+            this.asciiControlerFinish();
+            /* Effect during Remainting Time */
+            //this.asciiHappiness = ;
+        }
+
+        return this.getAsciiFrame200(this.frame);
+    },
+
+    getAsciiFrame250: function(frame) {
+        switch (frame) {
+        case 0:
+            return "<br />,'|''|',,,,'|',, :3 '|','|',,,'|','|'";
+        default:
+            return "<br />,'|''|',,,,'|',, :3 '|','|',,,'|','|'";
+        }
+    },
+
+    asciiControler250: function() {
+    /* This function controls animation of kitten ASCII 250 */
+        this.frame += 1;
+
+        /* Loop by default the animation between frame default and default without button */
+        if (this.frame == 0 && this.asciiLoop){
+            this.frame = -1;
+        }
+
+
+
+        /* Finish the animation (last frame + 1) */
+        else if (this.frame == 1){
+            this.asciiControlerFinish();
+            /* Effect during Remainting Time */
+            //this.asciiHappiness = ;
+        }
+
+        return this.getAsciiFrame250(this.frame);
+    },
+
+    getAsciiFrame300: function(frame) {
+        switch (frame) {
+        case 0:
+            return "<br />,'|''|',,,,'|',, :3 '|','|',,,'|','|'";
+        default:
+            return "<br />,'|''|',,,,'|',, :3 '|','|',,,'|','|'";
+        }
+    },
+
+    asciiControler300: function() {
+    /* This function controls animation of kitten ASCII 300 */
+        this.frame += 1;
+
+        /* Loop by default the animation between frame default and default without button */
+        if (this.frame == 0 && this.asciiLoop){
+            this.frame = -1;
+        }
+
+
+
+        /* Finish the animation (last frame + 1) */
+        else if (this.frame == 1){
+            this.asciiControlerFinish();
+            /* Effect during Remainting Time */
+            //this.asciiHappiness = ;
+        }
+
+        return this.getAsciiFrame300(this.frame);
+    },
+
+    getAsciiFrame400: function(frame) {
+        switch (frame) {
+        case 0:
+            return "<br />,'|''|',,,,'|',, :3 '|','|',,,'|','|'";
+        default:
+            return "<br />,'|''|',,,,'|',, :3 '|','|',,,'|','|'";
+        }
+    },
+
+    asciiControler400: function() {
+    /* This function controls animation of kitten ASCII 400 */
+        this.frame += 1;
+
+        /* Loop by default the animation between frame default and default without button */
+        if (this.frame == 0 && this.asciiLoop){
+            this.frame = -1;
+        }
+
+
+
+        /* Finish the animation (last frame + 1) */
+        else if (this.frame == 1){
+            this.asciiControlerFinish();
+            /* Effect during Remainting Time */
+            //this.asciiHappiness = ;
+        }
+
+        return this.getAsciiFrame400(this.frame);
+    },
+
+    getAsciiFrame500: function(frame) {
+        switch (frame) {
+        case 0:
+            return "<br />,'|''|',,,,'|',, :3 '|','|',,,'|','|'";
+        default:
+            return "<br />,'|''|',,,,'|',, :3 '|','|',,,'|','|'";
+        }
+    },
+
+    asciiControler500: function() {
+    /* This function controls animation of kitten ASCII 500 */
+        this.frame += 1;
+
+        /* Loop by default the animation between frame default and default without button */
+        if (this.frame == 0 && this.asciiLoop){
+            this.frame = -1;
+        }
+
+
+
+        /* Finish the animation (last frame + 1) */
+        else if (this.frame == 1){
+            this.asciiControlerFinish();
+            /* Effect during Remainting Time */
+            //this.asciiHappiness = ;
+        }
+
+        return this.getAsciiFrame500(this.frame);
+    },
+
+    getAsciiFrame600: function(frame) {
+        switch (frame) {
+        case 0:
+            return "<br />,'|''|',,,,'|',, :3 '|','|',,,'|','|'";
+        default:
+            return "<br />,'|''|',,,,'|',, :3 '|','|',,,'|','|'";
+        }
+    },
+
+    asciiControler600: function() {
+    /* This function controls animation of kitten ASCII 600 */
+        this.frame += 1;
+
+        /* Loop by default the animation between frame default and default without button */
+        if (this.frame == 0 && this.asciiLoop){
+            this.frame = -1;
+        }
+
+
+
+        /* Finish the animation (last frame + 1) */
+        else if (this.frame == 1){
+            this.asciiControlerFinish();
+            /* Effect during Remainting Time */
+            //this.asciiHappiness = ;
+        }
+
+        return this.getAsciiFrame600(this.frame);
+    },
+
+    getAsciiFrame700: function(frame) {
+        switch (frame) {
+        case 0:
+            return "<br />,'|''|',,,,'|',, :3 '|','|',,,'|','|'";
+        default:
+            return "<br />,'|''|',,,,'|',, :3 '|','|',,,'|','|'";
+        }
+    },
+
+    asciiControler700: function() {
+    /* This function controls animation of kitten ASCII 700 */
+        this.frame += 1;
+
+        /* Loop by default the animation between frame default and default without button */
+        if (this.frame == 0 && this.asciiLoop){
+            this.frame = -1;
+        }
+
+
+
+        /* Finish the animation (last frame + 1) */
+        else if (this.frame == 1){
+            this.asciiControlerFinish();
+            /* Effect during Remainting Time */
+            //this.asciiHappiness = ;
+        }
+
+        return this.getAsciiFrame700(this.frame);
+    },
+
+    getAsciiFrame800: function(frame) {
+        switch (frame) {
+        case 0:
+            return "<br />,'|''|',,,,'|',, :3 '|','|',,,'|','|'";
+        default:
+            return "<br />,'|''|',,,,'|',, :3 '|','|',,,'|','|'";
+        }
+    },
+
+    asciiControler800: function() {
+    /* This function controls animation of kitten ASCII 800 */
+        this.frame += 1;
+
+        /* Loop by default the animation between frame default and default without button */
+        if (this.frame == 0 && this.asciiLoop){
+            this.frame = -1;
+        }
+
+
+
+        /* Finish the animation (last frame + 1) */
+        else if (this.frame == 1){
+            this.asciiControlerFinish();
+            /* Effect during Remainting Time */
+            //this.asciiHappiness = ;
+        }
+
+        return this.getAsciiFrame800(this.frame);
+    },
+
+    getAsciiFrame900: function(frame) {
+        switch (frame) {
+        case 0:
+            return "<br />,'|''|',,,,'|',, :3 '|','|',,,'|','|'";
+        default:
+            return "<br />,'|''|',,,,'|',, :3 '|','|',,,'|','|'";
+        }
+    },
+
+    asciiControler900: function() {
+    /* This function controls animation of kitten ASCII 900 */
+        this.frame += 1;
+
+        /* Loop by default the animation between frame default and default without button */
+        if (this.frame == 0 && this.asciiLoop){
+            this.frame = -1;
+        }
+
+
+
+        /* Finish the animation (last frame + 1) */
+        else if (this.frame == 1){
+            this.asciiControlerFinish();
+            /* Effect during Remainting Time */
+            //this.asciiHappiness = ;
+        }
+
+        return this.getAsciiFrame900(this.frame);
+    },
+
+    getAsciiFrame1000: function(frame) {
+        switch (frame) {
+        case 0:
+            return "<br />,'|''|',,,,'|',, :3 '|','|',,,'|','|'";
+        default:
+            return "<br />,'|''|',,,,'|',, :3 '|','|',,,'|','|'";
+        }
+    },
+
+    asciiControler1000: function() {
+    /* This function controls animation of kitten ASCII 1000 */
+        this.frame += 1;
+
+        /* Loop by default the animation between frame default and default without button */
+        if (this.frame == 0 && this.asciiLoop){
+            this.frame = -1;
+        }
+
+
+
+        /* Finish the animation (last frame + 1) */
+        else if (this.frame == 1){
+            this.asciiControlerFinish();
+            /* Effect during Remainting Time */
+            //this.asciiHappiness = ;
+        }
+
+        return this.getAsciiFrame1000(this.frame);
+    },
+
+    getAsciiFrame1200: function(frame) {
+        switch (frame) {
+        case 0:
+            return "<br />,'|''|',,,,'|',, :3 '|','|',,,'|','|'";
+        default:
+            return "<br />,'|''|',,,,'|',, :3 '|','|',,,'|','|'";
+        }
+    },
+
+    asciiControler1200: function() {
+    /* This function controls animation of kitten ASCII 1200 */
+        this.frame += 1;
+
+        /* Loop by default the animation between frame default and default without button */
+        if (this.frame == 0 && this.asciiLoop){
+            this.frame = -1;
+        }
+
+
+
+        /* Finish the animation (last frame + 1) */
+        else if (this.frame == 1){
+            this.asciiControlerFinish();
+            /* Effect during Remainting Time */
+            //this.asciiHappiness = ;
+        }
+
+        return this.getAsciiFrame1200(this.frame);
+    },
+
+    getAsciiFrame1500: function(frame) {
+        switch (frame) {
+        case 0:
+            return "<br />,'|''|',,,,'|',, :3 '|','|',,,'|','|'";
+        default:
+            return "<br />,'|''|',,,,'|',, :3 '|','|',,,'|','|'";
+        }
+    },
+
+    asciiControler1500: function() {
+    /* This function controls animation of kitten ASCII 1500 */
+        this.frame += 1;
+
+        /* Loop by default the animation between frame default and default without button */
+        if (this.frame == 0 && this.asciiLoop){
+            this.frame = -1;
+        }
+
+
+
+        /* Finish the animation (last frame + 1) */
+        else if (this.frame == 1){
+            this.asciiControlerFinish();
+            /* Effect during Remainting Time */
+            //this.asciiHappiness = ;
+        }
+
+        return this.getAsciiFrame1500(this.frame);
+    },
+
+    getAsciiFrame2000: function(frame) {
+        switch (frame) {
+        case 0:
+            return "<br />,'|''|',,,,'|',, :3 '|','|',,,'|','|'";
+        default:
+            return "<br />,'|''|',,,,'|',, :3 '|','|',,,'|','|'";
+        }
+    },
+
+    asciiControler2000: function() {
+    /* This function controls animation of kitten ASCII 2000 */
+        this.frame += 1;
+
+        /* Loop by default the animation between frame default and default without button */
+        if (this.frame == 0 && this.asciiLoop){
+            this.frame = -1;
+        }
+
+
+
+        /* Finish the animation (last frame + 1) */
+        else if (this.frame == 1){
+            this.asciiControlerFinish();
+            /* Effect during Remainting Time */
+            //this.asciiHappiness = ;
+        }
+
+        return this.getAsciiFrame2000(this.frame);
+    },
+
+    getAsciiFrame5000: function(frame) {
+        switch (frame) {
+        case 0:
+            return "<br />,'|''|',,,,'|',, :3 '|','|',,,'|','|'";
+        default:
+            return "<br />,'|''|',,,,'|',, :3 '|','|',,,'|','|'";
+        }
+    },
+
+    asciiControler5000: function() {
+    /* This function controls animation of kitten ASCII 5000 */
+        this.frame += 1;
+
+        /* Loop by default the animation between frame default and default without button */
+        if (this.frame == 0 && this.asciiLoop){
+            this.frame = -1;
+        }
+
+
+
+        /* Finish the animation (last frame + 1) */
+        else if (this.frame == 1){
+            this.asciiControlerFinish();
+            /* Effect during Remainting Time */
+            //this.asciiHappiness = ;
+        }
+
+        return this.getAsciiFrame5000(this.frame);
+    },
+
+    getAsciiFrame10000: function(frame) {
+        switch (frame) {
+        case 0:
+            return "<br />,'|''|',,,,'|',, :3 '|','|',,,'|','|'";
+        default:
+            return "<br />,'|''|',,,,'|',, :3 '|','|',,,'|','|'";
+        }
+    },
+
+    asciiControler10000: function() {
+    /* This function controls animation of kitten ASCII 10000 */
+        this.frame += 1;
+
+        /* Loop by default the animation between frame default and default without button */
+        if (this.frame == 0 && this.asciiLoop){
+            this.frame = -1;
+        }
+
+
+
+        /* Finish the animation (last frame + 1) */
+        else if (this.frame == 1){
+            this.asciiControlerFinish();
+            /* Effect during Remainting Time */
+            //this.asciiHappiness = ;
+        }
+
+        return this.getAsciiFrame10000(this.frame);
     }
 
 });
