@@ -862,7 +862,7 @@ dojo.declare("classes.managers.ScienceManager", com.nuclearunicorn.core.TabManag
 			policies: ["authocracy", "republic"]
 		},
 		updateEffects: function(self, game){
-			self.effects["maxKittens"] = (game.ironWill)?0:1
+			self.effects["maxKittens"] = (game.ironWill)?0:1;
 		}
 	}, {
 		name: "tradition",
@@ -1587,7 +1587,7 @@ dojo.declare("classes.managers.ScienceManager", com.nuclearunicorn.core.TabManag
         if (effectsBase){
              effectsBase = this.game.resPool.addBarnWarehouseRatio(effectsBase);
         }
-             
+
         for (var name in this.effectsCachedExisting) {
              // Add effect from meta
              var effect = 0;
@@ -1595,28 +1595,28 @@ dojo.declare("classes.managers.ScienceManager", com.nuclearunicorn.core.TabManag
                 var effectMeta = this.getMetaEffect(name, this.meta[i]);
                 effect += effectMeta;
              }
-             
+
              // Previously, catnip demand (or other buildings that both affect the same resource)
              // could have theoretically had more than 100% reduction because they diminished separately,
              // this takes the total effect and diminishes it as a whole.
              if (this.game.isHyperbolic(name) && effect !== 0) {
              effect = this.game.getHyperbolicEffect(effect, 1.0);
              }
-             
+
              // Add effect from effectsBase
              if (effectsBase && effectsBase[name]) {
              effect += effectsBase[name];
              }
-             
+
              // Add effect in globalEffectsCached, in addition of other managers
              this.game.globalEffectsCached[name] = typeof(this.game.globalEffectsCached[name]) == "number" ? this.game.globalEffectsCached[name] + effect : effect;
              }
 			 }*/
 	update: function(){
 		for(var i = 0; i < this.policies.length; i++){
-			var policy = this.policies[i]
+			var policy = this.policies[i];
 			if(policy.researched && policy.updateEffects){
-				policy.updateEffects(policy, this.game)
+				policy.updateEffects(policy, this.game);
 			}
 		}
 	}
@@ -1647,7 +1647,7 @@ dojo.declare("classes.ui.PolicyBtnController", com.nuclearunicorn.game.ui.Buildi
 
 		return this.inherited(arguments);
 	},
-	
+
 	updateVisible: function(model){
 		var meta = model.metadata;
 		model.visible = meta.unlocked;
@@ -1708,7 +1708,7 @@ dojo.declare("classes.ui.PolicyBtnController", com.nuclearunicorn.game.ui.Buildi
 			this.payPrice(model);
 
 			this.onPurchase(model);
-			
+
 			callback(true);
 			this.game.render();
 			return;
@@ -1753,7 +1753,7 @@ dojo.declare("classes.ui.PolicyPanel", com.nuclearunicorn.game.ui.Panel, {
         });
 
 		dojo.create("label", { innerHTML: $I("science.policyToggleResearched.label") + "<br>", for: "policyToggleResearched"}, div);
-		
+
 		var groupCheckbox1 = dojo.create("input", {
             id : "policyToggleBlocked",
             type: "checkbox",
@@ -1775,13 +1775,13 @@ dojo.declare("classes.ui.PolicyPanel", com.nuclearunicorn.game.ui.Panel, {
 
 		var controller = new classes.ui.PolicyBtnController(this.game);
 		dojo.forEach(this.game.science.policies, function(policy, i){
-			var button = 
+			var button =
 				new com.nuclearunicorn.game.ui.BuildingResearchBtn({
 					id: policy.name, controller: controller}, self.game);
 			button.render(content);
 			self.addChild(button);
 		});
-		
+
 		dojo.create("div", { style: { clear: "both"}}, content);
 	}
 });

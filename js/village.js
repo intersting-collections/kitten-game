@@ -187,7 +187,7 @@ dojo.declare("classes.managers.VillageManager", com.nuclearunicorn.core.TabManag
 					case "scientist": // Science prices bonus
 						for (var i = 0; i < defaultObject.length; i++) {
 							if (defaultObject[i].name == "science") {
-								defaultObject[i].val -= defaultObject[i].val 
+								defaultObject[i].val -= defaultObject[i].val
 									* this.game.getLimitedDR(0.05 * burnedParagonRatio  * leaderRatio, 1.0); //5% before BP
 							}
 						}
@@ -195,7 +195,7 @@ dojo.declare("classes.managers.VillageManager", com.nuclearunicorn.core.TabManag
 					case "wise": // Religion bonus
 						for (var i = 0; i < defaultObject.length; i++) {
 							if (defaultObject[i].name == "faith" || defaultObject[i].name == "gold") {
-								defaultObject[i].val -= defaultObject[i].val 
+								defaultObject[i].val -= defaultObject[i].val
 									* this.game.getLimitedDR(0.09 + 0.01 * burnedParagonRatio * leaderRatio, 1.0); //10% before BP
 							}
 						}
@@ -442,8 +442,8 @@ dojo.declare("classes.managers.VillageManager", com.nuclearunicorn.core.TabManag
 		var theocracy = this.game.science.getPolicy("theocracy");
 		for (var i in this.sim.kittens){
 			var kitten = this.sim.kittens[i];
-			
-			if (kitten.isLeader && theocracy.researched && 
+
+			if (kitten.isLeader && theocracy.researched &&
 				(kitten.job != theocracy.requiredLeaderJob))
 			{
 				kitten.isLeader = false;
@@ -467,7 +467,7 @@ dojo.declare("classes.managers.VillageManager", com.nuclearunicorn.core.TabManag
 								diff *= this.getLeaderBonus(kitten.rank);
 							}
                             if ((!kitten.isLeader) && (this.game.village.leader)){
-								diff *= (1 + (this.getLeaderBonus(this.game.village.leader.rank) - 1) 
+								diff *= (1 + (this.getLeaderBonus(this.game.village.leader.rank) - 1)
 								* this.game.getEffect("boostFromLeader"));
                             }
 							diff *= this.happiness;	//alter positive resource production from jobs
@@ -606,7 +606,7 @@ dojo.declare("classes.managers.VillageManager", com.nuclearunicorn.core.TabManag
 				if (this.game.village.traits.indexOf(newKitten.trait) < 0) {
 					this.game.village.traits.unshift(newKitten.trait);
 				}
-	
+
 				if (newKitten.isLeader){
 						this.game.village.leader = newKitten;
 				}
@@ -644,7 +644,7 @@ dojo.declare("classes.managers.VillageManager", com.nuclearunicorn.core.TabManag
 
 		return game.getEffect("environmentHappinessBonus") + game.getEffect("environmentUnhappiness") ;
 	},
-	
+
 	/** Calculates a total happiness where result is a value of [0..1] **/
 	updateHappines: function(){
 		var happiness = 100;
@@ -790,7 +790,7 @@ dojo.declare("classes.managers.VillageManager", com.nuclearunicorn.core.TabManag
 			this.game.village.clearJobs(false);
 
 		if(this.game.village.leader && this.game.science.getPolicy("theocracy").researched){//hack for theocracy; so that it stop being soo annoying
-			this.game.village.leader.job = "priest"
+			this.game.village.leader.job = "priest";
 			situationJobs["priest"] = situationJobs["priest"] - 1;
 			this.game.village.getJob("priest").value += 1;
 		}
@@ -870,7 +870,7 @@ dojo.declare("classes.managers.VillageManager", com.nuclearunicorn.core.TabManag
 		case kittens > 1200:
 			return 17;
         case kittens > 1000:
-            return 16
+            return 16;
         case kittens > 900:
             return 15;
         case kittens > 800:
@@ -2214,10 +2214,10 @@ dojo.declare("classes.ui.village.Census", null, {
 		if (game.village.leader){
 			game.village.leader.isLeader = false;
 		}
-		
+
 		kitten.isLeader = true;
 		game.village.leader = kitten;
-		
+
 	},
 
 	getGovernmentInfo: function() {
@@ -2281,8 +2281,8 @@ dojo.declare("classes.ui.village.Census", null, {
 				bonus = bonus > 0 && kitten.isLeader ? (this.game.village.getLeaderBonus(kitten.rank) * (bonus + 1) - 1) : bonus;
 
 				//TODO: move me to getFromLeaderBonus
-				bonus = bonus > 0 && !kitten.isLeader && 
-					this.game.village.leader ? 
+				bonus = bonus > 0 && !kitten.isLeader &&
+					this.game.village.leader ?
 					(this.game.village.getLeaderBonus((this.game.village.leader || 0).rank) * this.game.getEffect("boostFromLeader") + 1)
 					* (bonus + 1) - 1 : bonus;
 				bonus = bonus * 100;
@@ -2394,7 +2394,7 @@ dojo.declare("classes.ui.village.Census", null, {
             } else {
                 dojo.style(record.unassignHref, "display", "none");
 			}
-			
+
 			record.content.innerHTML =
 				"<div class='info'>" + this.getStyledName(kitten) +
 				 ", " + kitten.age + " " + $I("village.census.age") + ", "
